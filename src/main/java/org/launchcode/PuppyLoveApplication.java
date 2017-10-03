@@ -1,4 +1,4 @@
-package org.launchcode;
+package main.java.org.launchcode;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
