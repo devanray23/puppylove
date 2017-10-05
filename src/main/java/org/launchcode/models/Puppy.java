@@ -9,6 +9,8 @@ public class Puppy {
     private String breed;
     private String location;
     private Image photo;
+    private int puppyId;
+    private static int nextId = 1;
 
 
     public Puppy(String name, String breed, String location, int age, Image photo) {
@@ -16,9 +18,21 @@ public class Puppy {
         this.breed = breed;
         this.location = location;
         this.photo = photo;
+        this.age = age;
     }
 
-    public Puppy() {}
+    public Puppy() {
+        puppyId = nextId;
+        nextId++;
+    }
+
+    public int getPuppyId() {
+        return puppyId;
+    }
+
+    public void setPuppyId(int puppyId) {
+        this.puppyId = puppyId;
+    }
 
     public String getName() {
         return name;
@@ -31,7 +45,9 @@ public class Puppy {
     public int getAge() {
         return age;
     }
-
+    public int setAge() {
+        return age;
+    }
     public String getBreed() {
         return breed;
     }
