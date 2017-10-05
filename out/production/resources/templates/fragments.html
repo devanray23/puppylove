@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https//www.thymeleaf.org/">
+<head th:fragment="head">
+    <meta charset="UTF-8"/>
+    <title th:text="${title}">Puppy Love</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <!-- <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+</head>
+<body>
+
+<!--<div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div th:if="${sessionActive} == false" class="navbar-header">
+            <a th:href="@{/}" class="navbar-brand">Puppy Love</a>
+        </div>
+        <div th:if="${sessionActive} == true" class="navbar-header">
+            <a th:href="@{/home}" class="navbar-brand">Puppy Love</a>
+        </div>
+        <div th:if="${sessionActive} == false" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/login}">Login</a></li>
+                <li><a th:href="@{/login/register}">Register</a></li>
+            </ul>
+        </div>
+        <div th:if="${sessionActive} == true" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/home}">Home</a></li>
+                <li><a th:href="@{/home/edit}">Edit Profile</a></li>
+                <li><a th:href="@{/home/search}">Search</a></li>
+                <li><a th:href="@{/home/logout}">LogOut</a></li>
+            </ul>
+        </div>
+    </div>
+</div>-->
+
+<div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a th:href="@{/}" class="navbar-brand">Puppy Love</a>
+        <ul class="nav navbar-nav">
+            <li><a th:href="@{/login}">Login</a></li>
+            <li><a th:href="@{/login/register}">Register</a></li>
+            <li><a th:href="@{/home}">Home</a></li>
+            <li><a th:href="@{/home/edit}">Edit Profile</a></li>
+            <li><a th:href="@{/home/search}">Search</a></li>
+            <li><a th:href="@{/home/logout}">LogOut</a></li>
+        </ul>
+    </div>
+
+</div>
+
+</body>
+</html>
