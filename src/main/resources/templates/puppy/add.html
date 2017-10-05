@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="post" style="max-width:600px;">
+    <div class="form-group">
+        <label for="name-field">Name</label>
+        <input class="form-control" id="name-field" type="text" name="name" />
+    </div>
+    <div class="form-group">
+        <label for="breed-field">Breed</label>
+        <input class="form-control" id="breed-field" type="text" name="breed" />
+    </div>
+    <div class="form-group">
+        <label for="loc-field">Location</label>
+        <input class="form-control" id="loc-field" type="text" name="location" />
+    </div>
+    <div class="form-group">
+        <label for="age-field">Age</label>
+        <input class="form-control" id="age-field" type="text" name="age" />
+    </div>
+    <input type="submit" value="Add Puppy" />
+</form>
+
+</body>
+</html>
