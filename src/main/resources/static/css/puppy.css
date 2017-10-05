@@ -1,0 +1,15 @@
+.image{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.puppyprofileinfo{
+    max-width: 300;
+    text-align: center;
+    background-color: #f2f2f2;
+}
+
+
