@@ -7,10 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.awt.*;
 
-/**
- * Created by LaunchCode
- */
-
 @Controller
 @RequestMapping("puppy")
 public class PuppyController {
@@ -27,7 +23,7 @@ public class PuppyController {
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String displayAddPuppyForm(Model model) {
-        model.addAttribute("title", "Add Puppy");
+        model.addAttribute("title", "Add Your Puppy");
         return "puppy/add";
     }
 
