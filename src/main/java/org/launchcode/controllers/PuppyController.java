@@ -69,7 +69,7 @@ public class PuppyController {
     public String processRemovePuppyForm(@RequestParam int[] puppyIds) {
 
         for (int puppyId : puppyIds) {
-            puppyDao.remove(puppyId);
+            puppyDao.delete(puppyId);
         }
 
         return "redirect:";
@@ -79,7 +79,7 @@ public class PuppyController {
     @RequestMapping(value = "edit/{puppyId}", method = RequestMethod.GET)
     public String displayEditForm(Model model, @PathVariable int puppyId) {
 
-        Puppy thePuppy = PuppyDao.getById(puppyId);
+        Puppy thePuppy = PuppyDao.findOne(puppyId);
         model.addAttribute("puppy", thePuppy);
         return "puppy/edit";
     }
@@ -88,7 +88,7 @@ public class PuppyController {
     public String processEditForm(@PathVariable int puppyId, int age,
                                   String name, String breed, String location) {
 
-        Puppy thePuppy = PuppyDao.getById(puppyId);
+        Puppy thePuppy = PuppyDao.findOne(puppyId);
         thePuppy.setName(name);
         thePuppy.setBreed(breed);
         thePuppy.setLocation(location);
