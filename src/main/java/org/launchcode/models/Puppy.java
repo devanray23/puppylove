@@ -23,6 +23,13 @@ public class Puppy {
     @NotNull
     @Size(min=2, max=15)
     private String location;
+<<<<<<< HEAD
+=======
+    private Image photo;
+    private int weight;
+    private int puppyId;
+    private static int nextId = 1;
+>>>>>>> 1247ca60a936881f945112d0a2d35cea9863e956
 
     @NotNull
     @Max(25)
@@ -31,11 +38,16 @@ public class Puppy {
     @ManyToOne
     private User user;
 
+<<<<<<< HEAD
     public Puppy(String name, String breed, String location, int age) {
+=======
+    public Puppy(String name, String breed, String location, int age, Image photo, int weight) {
+>>>>>>> 1247ca60a936881f945112d0a2d35cea9863e956
         this.name = name;
         this.breed = breed;
         this.location = location;
         this.age = age;
+        this.weight = weight;
     }
 
     public Puppy() { }
@@ -55,11 +67,25 @@ public class Puppy {
     public int getAge() {
         return age;
     }
+<<<<<<< HEAD
 
     public int setAge() {
         return age;
     }
 
+=======
+    public int setAge(int age) {
+        this.age = age;
+        return age;
+    }
+    public int getWeight() {
+        return weight;
+    }
+    public int setWeight(int weight) {
+        this.weight = weight;
+        return weight;
+    }
+>>>>>>> 1247ca60a936881f945112d0a2d35cea9863e956
     public String getBreed() {
         return breed;
     }
