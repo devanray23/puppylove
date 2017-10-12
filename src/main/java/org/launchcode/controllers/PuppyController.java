@@ -75,24 +75,4 @@ public class PuppyController {
         return "redirect:";
     }
 
-
-    @RequestMapping(value = "edit/{puppyId}", method = RequestMethod.GET)
-    public String displayEditForm(Model model, @PathVariable int puppyId) {
-
-        Puppy thePuppy = PuppyDao.findOne(puppyId);
-        model.addAttribute("puppy", thePuppy);
-        return "puppy/edit";
-    }
-
-    @RequestMapping(value = "edit/{puppyId}", method = RequestMethod.POST)
-    public String processEditForm(@PathVariable int puppyId, int age,
-                                  String name, String breed, String location) {
-
-        Puppy thePuppy = PuppyDao.findOne(puppyId);
-        thePuppy.setName(name);
-        thePuppy.setBreed(breed);
-        thePuppy.setLocation(location);
-
-        return "redirect:";
-    }
 }
