@@ -5,9 +5,14 @@
   "dependencies": {
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+<<<<<<< HEAD
     "react-scripts": "0.9.5"
   },
   "devDependencies": {},
+=======
+    "react-scripts": "1.0.14"
+  },
+>>>>>>> master
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

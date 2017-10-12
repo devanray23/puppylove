@@ -19,6 +19,7 @@
         <th>Location</th>
         <th>Breed</th>
         <th>Photo</th>
+        <th>Weight</th>
     </tr>
 
     <tr th:each="puppy : ${puppies}">
@@ -27,6 +28,7 @@
         <td th:text="${puppy.location}"></td>
         <td th:text="${puppy.breed}"></td>
         <td th:text="${puppy.photo}"></td>
+        <td th:text="${puppy.weight}"></td>
     </tr>
 
 </table>

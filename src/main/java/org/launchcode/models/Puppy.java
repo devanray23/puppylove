@@ -1,37 +1,48 @@
 package org.launchcode.models;
 
-import java.awt.*;
+import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
+@Entity
 public class Puppy {
 
+    @Id
+    @GeneratedValue
+    private int id;
+
+    @NotNull
+    @Size(min=2, max=15)
     private String name;
-    private int age;
+
+    @NotNull
+    @Size(min=2, max=15)
     private String breed;
+
+    @NotNull
+    @Size(min=2, max=15)
     private String location;
-    private Image photo;
-    private int puppyId;
-    private static int nextId = 1;
+
+    @NotNull
+    @Max(25)
+    private int age;
+
+    @ManyToOne
+    private User user;
 
 
-    public Puppy(String name, String breed, String location, int age, Image photo) {
+    public Puppy(String name, String breed, String location, int age) {
         this.name = name;
         this.breed = breed;
         this.location = location;
-        this.photo = photo;
         this.age = age;
     }
 
-    public Puppy() {
-        puppyId = nextId;
-        nextId++;
-    }
+    public Puppy() { }
 
-    public int getPuppyId() {
-        return puppyId;
-    }
-
-    public void setPuppyId(int puppyId) {
-        this.puppyId = puppyId;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -45,9 +56,11 @@ public class Puppy {
     public int getAge() {
         return age;
     }
+
     public int setAge() {
         return age;
     }
+
     public String getBreed() {
         return breed;
     }
@@ -63,13 +76,11 @@ public class Puppy {
     public void setLocation(String location) {
         this.location = location;
     }
-    public Image getPhoto() {
-        return photo;
-    }
 
-    public void setPhoto(Image photo) {
-        this.photo = photo;
-    }
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
+
 }
 
 

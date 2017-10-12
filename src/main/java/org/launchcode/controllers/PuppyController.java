@@ -1,27 +1,34 @@
 package org.launchcode.controllers;
 
+import org.launchcode.models.User;
 import org.launchcode.models.Puppy;
-import org.launchcode.models.PuppyData;
+import org.launchcode.models.data.UserDao;
+import org.launchcode.models.data.PuppyDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
-import java.awt.*;
+import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by LaunchCode
- */
 @Controller
 @RequestMapping("puppy")
 public class PuppyController {
 
-    // Request path: /cheese
+
+    @Autowired
+    private PuppyDao puppyDao;
+    @Autowired
+    private UserDao userDao;
+
+    // Request path: /puppy
     @RequestMapping(value = "")
     public String index(Model model) {
 
-        model.addAttribute("puppies", PuppyData.getAll());
+        model.addAttribute("puppies", puppyDao.findAll());
         model.addAttribute("title", "My Puppies");
 
         return "puppy/index";
@@ -29,20 +36,32 @@ public class PuppyController {
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String displayAddPuppyForm(Model model) {
-        model.addAttribute("title", "Add Puppy");
+        model.addAttribute("title", "Add Your Puppy");
+        model.addAttribute(new Puppy());
+        model.addAttribute("users", userDao.findAll());
         return "puppy/add";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String processAddPuppyForm(@ModelAttribute Puppy newPuppy) {
-        PuppyData.add(newPuppy);
+    public String processAddPuppyForm(@ModelAttribute @Valid Puppy newPuppy,
+                                      Errors errors, @RequestParam int userId,
+                                      Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Your Puppy");
+            model.addAttribute("users", userDao.findAll());
+            return "puppy/add";
+        }
+
+        User user = userDao.findOne(userId);
+        newPuppy.setUser(user);
+        puppyDao.save(newPuppy);
         return "redirect:";
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemovePuppyForm(Model model) {
-        model.addAttribute("puppies", PuppyData.getAll());
-        model.addAttribute("title", "Remove Puppy");
+        model.addAttribute("puppies", puppyDao.findAll());
+        model.addAttribute("title", "Remove Your Puppy");
         return "puppy/remove";
     }
 
@@ -50,31 +69,10 @@ public class PuppyController {
     public String processRemovePuppyForm(@RequestParam int[] puppyIds) {
 
         for (int puppyId : puppyIds) {
-            PuppyData.remove(puppyId);
+            puppyDao.delete(puppyId);
         }
 
         return "redirect:";
     }
 
-
-    @RequestMapping(value = "edit/{puppyId}", method = RequestMethod.GET)
-    public String displayEditForm(Model model, @PathVariable int puppyId) {
-
-        Puppy thePuppy = PuppyData.getById(puppyId);
-        model.addAttribute("puppy", thePuppy);
-        return "puppy/edit";
-    }
-
-    @RequestMapping(value = "edit/{puppyId}", method = RequestMethod.POST)
-    public String processEditForm(@PathVariable int puppyId, int age,
-                                  String name, String breed, Image photo, String location) {
-
-        Puppy thePuppy = PuppyData.getById(puppyId);
-        thePuppy.setName(name);
-        thePuppy.setBreed(breed);
-        thePuppy.setLocation(location);
-        thePuppy.setPhoto(photo);
-
-        return "redirect:";
-    }
 }
