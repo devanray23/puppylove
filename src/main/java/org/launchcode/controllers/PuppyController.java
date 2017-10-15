@@ -75,4 +75,31 @@ public class PuppyController {
         return "redirect:";
     }
 
+    @RequestMapping(value = "edit/{puppyId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int puppyId) {
+        model.addAttribute("puppy", puppyDao.findOne(puppyId));
+        puppyDao.delete(puppyId);
+        return "puppy/edit";
+    }
+
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public String processEditForm (@ModelAttribute  @Valid Puppy tempPuppy,
+                                   Errors errors, Model model) {
+
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Edit Puppy");
+            model.addAttribute("puppy", tempPuppy);
+            puppyDao.delete(tempPuppy.getId());
+            return "puppy/edit";
+        }
+
+        puppyDao.save(tempPuppy);
+        return "redirect:";
+    }
+
+    @RequestMapping(value = "view/{puppyId}", method = RequestMethod.GET)
+    public String viewPuppy(Model model, @PathVariable int puppyId) {
+        model.addAttribute("puppy", puppyDao.findOne(puppyId));
+        return "puppy/view";
+    }
 }
