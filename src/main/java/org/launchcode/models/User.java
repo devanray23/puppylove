@@ -42,7 +42,13 @@ public class User{
 
     @OneToMany
     @JoinColumn(name = "puppy_id")
-    private List<Puppy> puppies = new ArrayList<>();
+    private Set<Puppy> puppies;
+
+    public Set<Puppy> getPuppies(){ return this.puppies; }
+
+    public void setPuppies(Set<Puppy> puppies){this.puppies = puppies; }
+
+
 
     private static String hashPassword(String password) { return encoder.encode(password); }
 

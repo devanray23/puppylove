@@ -2,38 +2,32 @@ package org.launchcode.controllers;
 
 import org.launchcode.models.User;
 import org.launchcode.models.Puppy;
-import org.launchcode.models.data.UserDao;
-import org.launchcode.models.data.PuppyDao;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("puppy")
-public class PuppyController {
-
-
-    @Autowired
-    private PuppyDao puppyDao;
-    @Autowired
-    private UserDao userDao;
+public class PuppyController extends AbstractController {
 
     // Request path: /puppy
     @RequestMapping(value = "")
-    public String index(Model model) {
+    public String index(Model model, HttpServletRequest request) {
 
-        model.addAttribute("puppies", puppyDao.findAll());
+        User user = getUserFromSession(request.getSession());
+
+        model.addAttribute("puppies", user.getPuppies());
         model.addAttribute("title", "My Puppies");
 
         return "puppy/index";
     }
 
+
+    // Change Puppy Adding for specific user
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String displayAddPuppyForm(Model model) {
         model.addAttribute("title", "Add Your Puppy");
@@ -42,6 +36,8 @@ public class PuppyController {
         return "puppy/add";
     }
 
+
+    // Change Puppy Adding for specific user
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddPuppyForm(@ModelAttribute @Valid Puppy newPuppy,
                                       Errors errors, @RequestParam int userId,
@@ -58,6 +54,7 @@ public class PuppyController {
         return "redirect:";
     }
 
+    // Change Puppy removing for specific user
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemovePuppyForm(Model model) {
         model.addAttribute("puppies", puppyDao.findAll());
@@ -65,6 +62,7 @@ public class PuppyController {
         return "puppy/remove";
     }
 
+    // Change Puppy removing for specific user
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemovePuppyForm(@RequestParam int[] puppyIds) {
 
