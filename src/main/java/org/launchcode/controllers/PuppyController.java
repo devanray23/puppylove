@@ -55,7 +55,7 @@ public class PuppyController {
         User user = userDao.findOne(userId);
         newPuppy.setUser(user);
         puppyDao.save(newPuppy);
-        return "redirect:";
+        return "puppy/view";
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.GET)
