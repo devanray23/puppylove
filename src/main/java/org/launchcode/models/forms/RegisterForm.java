@@ -16,6 +16,9 @@ public class RegisterForm {
     private String name;
 
     @NotNull
+    private int age;
+
+    @NotNull
     @Pattern(regexp = "(\\S){4,20}", message = "Password must have 4-20 characters")
     private String password;
 
@@ -45,6 +48,8 @@ public class RegisterForm {
         this.name = name;
     }
 
+    public String getName(){ return name; }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -52,4 +57,8 @@ public class RegisterForm {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public int getAge() { return age; }
+
+    public void setAge(int age) { this.age = age; }
 }

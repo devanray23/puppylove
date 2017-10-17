@@ -20,6 +20,7 @@ public class PuppyController extends AbstractController {
 
         User user = getUserFromSession(request.getSession());
 
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
         model.addAttribute("puppies", user.getPuppies());
         model.addAttribute("title", "My Puppies");
 
@@ -29,7 +30,9 @@ public class PuppyController extends AbstractController {
 
     // Change Puppy Adding for specific user
     @RequestMapping(value = "add", method = RequestMethod.GET)
-    public String displayAddPuppyForm(Model model) {
+    public String displayAddPuppyForm(Model model, HttpServletRequest request) {
+
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
         model.addAttribute("title", "Add Your Puppy");
         model.addAttribute(new Puppy());
         model.addAttribute("users", userDao.findAll());
@@ -40,15 +43,16 @@ public class PuppyController extends AbstractController {
     // Change Puppy Adding for specific user
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddPuppyForm(@ModelAttribute @Valid Puppy newPuppy,
-                                      Errors errors, @RequestParam int userId,
-                                      Model model) {
+                                      Errors errors,
+                                      Model model, HttpServletRequest request) {
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Your Puppy");
+            model.addAttribute("sessionActive", isSessionActive(request.getSession()));
             model.addAttribute("users", userDao.findAll());
             return "puppy/add";
         }
 
-        User user = userDao.findOne(userId);
+        User user = userDao.findOne(getUserIdFromSession(request));
         newPuppy.setUser(user);
         puppyDao.save(newPuppy);
         return "redirect:";
@@ -56,8 +60,9 @@ public class PuppyController extends AbstractController {
 
     // Change Puppy removing for specific user
     @RequestMapping(value = "remove", method = RequestMethod.GET)
-    public String displayRemovePuppyForm(Model model) {
+    public String displayRemovePuppyForm(Model model, HttpServletRequest request) {
         model.addAttribute("puppies", puppyDao.findAll());
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
         model.addAttribute("title", "Remove Your Puppy");
         return "puppy/remove";
     }

@@ -18,6 +18,9 @@ public class HomeController extends AbstractController {
 
         model.addAttribute("User", user.getName());
         model.addAttribute("title", "Home Page");
+        model.addAttribute("puppies", user.getPuppies());
+        model.addAttribute("welcome", "Welcome " + user.getName() + "!");
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
 
         return "home/index";
     }
@@ -25,6 +28,14 @@ public class HomeController extends AbstractController {
     @RequestMapping("viewpups")
     public String displayViewPupsPage(Model model){
         return "redirect:/puppy/index";
+    }
+
+    @RequestMapping("logout")
+    public String logout(HttpServletRequest request){
+
+        clearSession(request.getSession());
+
+        return "redirect:/authenticate";
     }
 
 }

@@ -11,7 +11,7 @@ public class FirstRunController extends AbstractController {
 
     @RequestMapping(value = "")
     public String index(Model model, HttpServletRequest request){
-        model.addAttribute("title", "Welcome to RandNums!");
+        model.addAttribute("title", "Welcome to PuppyLove!");
         clearSession(request.getSession());
         model.addAttribute("sessionActive", isSessionActive(request.getSession()));
         return "index";

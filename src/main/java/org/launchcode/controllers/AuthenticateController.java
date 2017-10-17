@@ -15,7 +15,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("authenticate")
-public class LoginController extends AbstractController {
+public class AuthenticateController extends AbstractController {
 
     //Displays Login Page
     @RequestMapping(value= "", method = RequestMethod.GET)
@@ -23,7 +23,8 @@ public class LoginController extends AbstractController {
         model.addAttribute("sessionActive", isSessionActive(request.getSession()));
         model.addAttribute("title", "Login");
         model.addAttribute("loginForm", new LoginForm());
-        return "authenticate/index";
+
+        return "authenticate/login";
     }
 
     //Displays Register Page
@@ -38,10 +39,10 @@ public class LoginController extends AbstractController {
 
     //Processes Register Form and validates user input
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String register(@ModelAttribute @Valid RegisterForm registerForm, Errors errors, HttpServletRequest request, Model model) {
+    public String proccessRegisterForm(@ModelAttribute @Valid RegisterForm registerForm, Errors errors, HttpServletRequest request, Model model) {
 
         if (errors.hasErrors()) {
-            model.addAttribute("title", "Register to RandNums");
+            model.addAttribute("title", "Register");
             model.addAttribute("sessionActive", isSessionActive(request.getSession()));
             return "authenticate/register";
         }
@@ -49,13 +50,13 @@ public class LoginController extends AbstractController {
         User existingUser = userDao.findByEmail(registerForm.getEmail());
 
         if (existingUser != null) {
-            errors.rejectValue("username", "username.alreadyexists", "A user with that username already exists");
+            errors.rejectValue("username", "email.alreadyexists", "A user with that email already exists");
             model.addAttribute("title", "Register");
             model.addAttribute("sessionActive", isSessionActive(request.getSession()));
             return "authenticate/register";
         }
 
-        User newUser = new User(registerForm.getEmail(), registerForm.getEmail(), registerForm.getPassword());
+        User newUser = new User(registerForm.getName(), registerForm.getAge(), registerForm.getEmail(), registerForm.getPassword());
 
         userDao.save(newUser);
         setUserInSession(request.getSession(), newUser);
@@ -65,7 +66,7 @@ public class LoginController extends AbstractController {
 
     //Processes Login Form and validates user input
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public String login(@ModelAttribute @Valid LoginForm loginForm, Errors errors, HttpServletRequest request, Model model) {
+    public String processLoginForm(@ModelAttribute @Valid LoginForm loginForm, Errors errors, HttpServletRequest request, Model model) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Login");
@@ -76,7 +77,7 @@ public class LoginController extends AbstractController {
         String password = loginForm.getPassword();
 
         if (theUser == null) {
-            errors.rejectValue("username", "user.invalid", "The given username does not exist");
+            errors.rejectValue("email", "user.invalid", "The given email is not linked to an account.");
             model.addAttribute("sessionActive", isSessionActive(request.getSession()));
             model.addAttribute("title", "Login");
             return "authenticate/index";
