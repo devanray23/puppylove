@@ -19,14 +19,14 @@
         </div>
         <div th:if="${sessionActive} == false" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a th:href="@{/authenticate/login}">Login</a></li>
+                <li><a th:href="@{/authenticate}">Login</a></li>
                 <li><a th:href="@{/authenticate/register}">Register</a></li>
             </ul>
         </div>
         <div th:if="${sessionActive} == true" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a th:href="@{/home}">Home</a></li>
-                <li><a th:href="@{/home/viewpuppies}">My Pups</a></li>
+                <li><a th:href="@{/puppy}">My Pups</a></li>
                 <li><a th:href="@{/home/viewprofile}">View Profile</a></li>
                 <li><a th:href="@{/home/search}">Search</a></li>
                 <li><a th:href="@{/home/logout}">LogOut</a></li>
