@@ -101,7 +101,9 @@ public class PuppyController extends AbstractController {
     }
 
     @RequestMapping(value = "view/{puppyId}", method = RequestMethod.GET)
-    public String viewPuppy(Model model, @PathVariable int puppyId) {
+    public String viewPuppy(Model model, @PathVariable int puppyId,
+                            HttpServletRequest request) {
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
         model.addAttribute("puppy", puppyDao.findOne(puppyId));
         return "puppy/view";
     }
