@@ -1,6 +1,4 @@
 import React from 'react';
-import $ from "jquery";
-import toastr from 'toastr';
 import './App.css';
 
 class App extends React.Component {
@@ -59,7 +57,6 @@ class App extends React.Component {
           <PuppyForm createPuppy={this.createPuppy}/>
           <PuppyTable deletePuppy={this.deletePuppy} puppies={this.state.puppies}/> 
        </div>
-    );
   }
 }
 
