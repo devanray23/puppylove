@@ -3,14 +3,20 @@
 <head th:replace="fragments :: head"></head>
 <body class="container">
 
+<<<<<<< HEAD
 <h1 th:text="${title}" style="padding-top:100px">Default Title</h1>
 
+=======
+>>>>>>> 13526d708f9629b8b5eca34b740eda488014d1db
 <div th:replace="fragments :: page-header"></div>
 
-<h1 th:text="${puppy.name}">Puppy</h1>
+<form method="post" style="max-width:600px;" th:object="${puppy}" action="/puppy/view">
+
+    <h1 th:text="${puppy.name}">Puppy</h1>
 <p th:value="${puppy.location}">Location</p>
 <p th:value="${puppy.breed}">Breed</p>
 <p th:value="${puppy.age}">Age</p>
+</form>
 
 
 </body>
