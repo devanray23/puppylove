@@ -2,31 +2,34 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
 <body class="container">
-<h1 th:text="${title}">Default Title</h1>
 
-<nav th:replace="fragments :: navigation"></nav>
+<h1 th:text="${title}" style="padding-top:100px">Default Title</h1>
 
-<form method="post" style="max-width:600px;">
+<div th:replace="fragments :: page-header"></div>
+
+
+<form method="post" style="max-width:600px;" th:object="${puppy}">
     <div class="form-group">
-        <label for="name-field">Name</label>
-        <input class="form-control" id="name-field" type="text" name="name" />
+        <label th:for="name">Name</label>
+        <input class="form-control" th:field="*{name}" />
+        <span th:errors="*{name}" class="error"></span>
     </div>
     <div class="form-group">
-        <label for="breed-field">Breed</label>
-        <input class="form-control" id="breed-field" type="text" name="breed" />
+        <label th:for="breed">Breed</label>
+        <input class="form-control" th:field="*{breed}" />
+        <span th:errors="*{breed}" class="error"></span>
     </div>
     <div class="form-group">
-        <label for="loc-field">Location</label>
-        <input class="form-control" id="loc-field" type="text" name="location" />
+        <label th:for="location">Location</label>
+        <input class="form-control" th:field="*{location}" />
+        <span th:errors="*{location}" class="error"></span>
     </div>
     <div class="form-group">
-        <label for="age-field">Age</label>
-        <input class="form-control" id="age-field" type="text" name="age" />
+        <label th:for="age">Age</label>
+        <input class="form-control" th:field="*{age}" />
+        <span th:errors="*{age}" class="error"></span>
     </div>
-    <div class="form-group">
-        <label for="weight-field">Weight</label>
-        <input class="form-control" id="weight-field" type="text" name="weight" />
-    </div>
+
     <input type="submit" value="Add Puppy" />
 </form>
 
