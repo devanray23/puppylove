@@ -55,6 +55,8 @@ public class PuppyController extends AbstractController {
         User user = userDao.findOne(getUserIdFromSession(request));
         newPuppy.setUser(user);
         puppyDao.save(newPuppy);
+        user.addPuppy(newPuppy);
+        userDao.save(user);
         return "puppy/view";
     }
 

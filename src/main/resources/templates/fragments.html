@@ -5,6 +5,7 @@
     <title th:text="${title}">Puppy Love</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/CSS/images.css" />
     <!-- <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 </head>
 <body>
@@ -32,26 +33,11 @@
                 <li><a th:href="@{/home/logout}">LogOut</a></li>
             </ul>
         </div>
+        <div>
+            <img src="./../image/puppylogo.jpg" alt="puppy" class="nav-logo" />
+        </div>
     </div>
 </div>
-
-<!--<div th:fragment="page-header" class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <a th:href="@{/}" class="navbar-brand">Puppy Love</a>
-        <ul class="nav navbar-nav">
-            <li><a th:href="@{/login}">Login</a></li>
-            <li><a th:href="@{/login/register}">Register</a></li>
-            <li><a th:href="@{/home}">Home</a></li>
-            <li><a th:href="@{/user/viewprofile}">Profile View</a></li>
-            <li><a th:href="@{/puppy/view}">Puppy Profile View</a></li>
-            <li><a th:href="@{/puppy/add}">Add a Puppy!</a></li>
-            <li><a th:href="@{/puppy/edit}">Edit a Puppy</a></li>
-            <li><a th:href="@{/home/search}">Search</a></li>
-            <li><a th:href="@{/home/logout}">LogOut</a></li>
-        </ul>
-    </div>
-
-</div>-->
 
 </body>
 </html>
