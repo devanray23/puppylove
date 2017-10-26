@@ -57,6 +57,7 @@ class App extends React.Component {
           <PuppyForm createPuppy={this.createPuppy}/>
           <PuppyTable deletePuppy={this.deletePuppy} puppies={this.state.puppies}/> 
        </div>
+       );
   }
 }
 
