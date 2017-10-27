@@ -27,7 +27,6 @@ public class PuppyController extends AbstractController {
         return "puppy/index";
     }
 
-
     // Change Puppy Adding for specific user
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String displayAddPuppyForm(Model model, HttpServletRequest request) {
@@ -38,7 +37,6 @@ public class PuppyController extends AbstractController {
         model.addAttribute("users", userDao.findAll());
         return "puppy/add";
     }
-
 
     // Change Puppy Adding for specific user
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -55,6 +53,8 @@ public class PuppyController extends AbstractController {
         User user = userDao.findOne(getUserIdFromSession(request));
         newPuppy.setUser(user);
         puppyDao.save(newPuppy);
+        user.addPuppy(newPuppy);
+        userDao.save(user);
         return "puppy/view";
     }
 
@@ -69,9 +69,14 @@ public class PuppyController extends AbstractController {
 
     // Change Puppy removing for specific user
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemovePuppyForm(@RequestParam int[] puppyIds) {
+    public String processRemovePuppyForm(@RequestParam int[] puppyIds,
+                                         Model model, HttpServletRequest request) {
+
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
+        User user = userDao.findOne(getUserIdFromSession(request));
 
         for (int puppyId : puppyIds) {
+            user.removePuppy(puppyDao.findOne(puppyId));
             puppyDao.delete(puppyId);
         }
 

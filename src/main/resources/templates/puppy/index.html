@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-
 <body class="container">
-
 <h1 th:text="${title}">Default Title</h1>
 
 <div th:replace="fragments :: page-header"></div>
@@ -15,16 +13,18 @@
 
     <tr>
         <th>Name</th>
-        <th>Age</th>
-        <th>Location</th>
+        <th>Age: Month</th>
+        <th>Age: Year</th>
         <th>Breed</th>
+        <th>Size</th>
     </tr>
 
     <tr th:each="puppy : ${puppies}">
         <td th:text="${puppy.name}"></td>
-        <td th:text="${puppy.age}"></td>
-        <td th:text="${puppy.location}"></td>
+        <td th:text="${puppy.ageMonth}"></td>
+        <td th:text="${puppy.ageYear}"></td>
         <td th:text="${puppy.breed}"></td>
+        <td th:text="${puppy.size}"></td>
     </tr>
 
 </table>

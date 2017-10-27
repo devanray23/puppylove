@@ -45,6 +45,7 @@ public class User{
     @JoinTable(name = "user_puppy",
             joinColumns =  @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "puppy_id", referencedColumnName = "id"))
+
     private Set<Puppy> puppies;
 
     public Set<Puppy> getPuppies(){ return this.puppies; }
@@ -74,4 +75,8 @@ public class User{
     public String getDescription() { return description; }
 
     public void setDescription(String description) { this.description = description; }
+
+    public void addPuppy(Puppy puppy){ this.puppies.add(puppy); }
+
+    public void removePuppy(Puppy puppy){ this.puppies.remove(puppy); }
 }
