@@ -23,7 +23,6 @@ public class AuthenticateController extends AbstractController {
         model.addAttribute("sessionActive", isSessionActive(request.getSession()));
         model.addAttribute("title", "Login");
         model.addAttribute("loginForm", new LoginForm());
-
         return "authenticate/login";
     }
 
@@ -53,6 +52,7 @@ public class AuthenticateController extends AbstractController {
             errors.rejectValue("username", "email.alreadyexists", "A user with that email already exists");
             model.addAttribute("title", "Register");
             model.addAttribute("sessionActive", isSessionActive(request.getSession()));
+            model.addAttribute("existingError", "User already exists.");
             return "authenticate/register";
         }
 
@@ -77,17 +77,17 @@ public class AuthenticateController extends AbstractController {
         String password = loginForm.getPassword();
 
         if (theUser == null) {
-            errors.rejectValue("email", "user.invalid", "The given email is not linked to an account.");
+            errors.rejectValue("email", "email.invalid", "The given email is not linked to an account.");
             model.addAttribute("sessionActive", isSessionActive(request.getSession()));
             model.addAttribute("title", "Login");
-            return "authenticate/index";
+            return "authenticate/login";
         }
 
         if (!theUser.isMatchingPassword(password)) {
             errors.rejectValue("password", "password.invalid", "Invalid password");
             model.addAttribute("sessionActive", isSessionActive(request.getSession()));
             model.addAttribute("title", "Login");
-            return "authenticate/index";
+            return "authenticate/login";
         }
 
         setUserInSession(request.getSession(), theUser);

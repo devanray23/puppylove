@@ -15,9 +15,11 @@ public class User{
     int id;
 
     @NotNull
+    @Size(min = 2, max = 25,  message = "Name must be between 2 and 25 characters")
     String name;
 
     @Email
+    @Size(min = 1, message = "Invalid email")
     String email;
 
     @NotNull
@@ -25,6 +27,7 @@ public class User{
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @NotNull
+    @Size(min = 0)
     int age;
 
     @NotNull
@@ -76,7 +79,11 @@ public class User{
 
     public void setDescription(String description) { this.description = description; }
 
+<<<<<<< HEAD
     public void addPuppy(Puppy puppy){ this.puppies.add(puppy); }
 
     public void removePuppy(Puppy puppy){ this.puppies.remove(puppy); }
+=======
+    public void addPuppy(Puppy pup) { this.puppies.add(pup); }
+>>>>>>> 7c29287997da414623257fc4806d20c2f2127c26
 }

@@ -1,20 +1,30 @@
 package org.launchcode.controllers;
 
-import org.launchcode.models.User;
 import org.launchcode.models.Puppy;
+import org.launchcode.models.User;
+import org.launchcode.models.data.PuppyDao;
+import org.launchcode.models.data.UserDao;
 import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import javax.validation.Valid;
+
+import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("puppy")
 public class PuppyController extends AbstractController {
 
     // Request path: /puppy
+    @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
     @RequestMapping(value = "")
     public String index(Model model, HttpServletRequest request) {
 
