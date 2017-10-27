@@ -1,6 +1,7 @@
 package org.launchcode.models;
 
 import org.launchcode.models.data.PuppyDao;
+import org.launchcode.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -16,8 +17,11 @@ public class DatabaseLoader implements CommandLineRunner {
         this.repository = repository;
     }
 
+    @Autowired
+    protected UserDao userDao;
+
     @Override
     public void run(String... strings) throws Exception {
-        this.repository.save(new Puppy("Frodo", "Beagle", "Seattle, WA", 5));
+        this.repository.save(new Puppy("Frodo", "Corgi", "March", 2017, "Small", userDao.findOne(1)));
     }
 }
