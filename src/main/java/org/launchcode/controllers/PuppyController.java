@@ -60,6 +60,7 @@ public class PuppyController extends AbstractController {
             return "puppy/add";
         }
 
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
         User user = userDao.findOne(getUserIdFromSession(request));
         newPuppy.setUser(user);
         puppyDao.save(newPuppy);
@@ -90,28 +91,6 @@ public class PuppyController extends AbstractController {
             puppyDao.delete(puppyId);
         }
 
-        return "redirect:";
-    }
-
-    @RequestMapping(value = "edit/{puppyId}", method = RequestMethod.GET)
-    public String displayEditForm(Model model, @PathVariable int puppyId) {
-        model.addAttribute("puppy", puppyDao.findOne(puppyId));
-        puppyDao.delete(puppyId);
-        return "puppy/edit";
-    }
-
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm (@ModelAttribute  @Valid Puppy tempPuppy,
-                                   Errors errors, Model model) {
-
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Edit Puppy");
-            model.addAttribute("puppy", tempPuppy);
-            puppyDao.delete(tempPuppy.getId());
-            return "puppy/edit";
-        }
-
-        puppyDao.save(tempPuppy);
         return "redirect:";
     }
 
