@@ -6,6 +6,29 @@
 
 <h1 th:text="${title}" style="padding-top:100px">Default Title</h1>
 
+<form method="post" style="max-width:600px;" th:object="${searchForm}">
+</form>
+
+
+<hr />
+
+
+<table class="table">
+
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Location</th>
+    </tr>
+
+    <tr th:each="user : ${users}">
+        <td th:href="/home/viewprofile{${user.id}}" th:text="${user.name}"></td>
+        <td th:text="${user.age}"></td>
+        <td th:text="${user.location}"></td>
+    </tr>
+
+</table>
+
 
 </body>
 </html>
