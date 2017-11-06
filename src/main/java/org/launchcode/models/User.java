@@ -8,14 +8,14 @@ import javax.validation.constraints.Size;
 import java.util.*;
 
 @Entity
-public class User{
+public class User {
 
     @Id
     @GeneratedValue
     int id;
 
     @NotNull
-    @Size(min = 2, max = 25,  message = "Name must be between 2 and 25 characters")
+    @Size(min = 2, max = 25, message = "Name must be between 2 and 25 characters")
     String name;
 
     @Email
@@ -34,7 +34,8 @@ public class User{
     @Size(min = 0, max = 250)
     String description;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String name, int age, String email, String password) {
         this.name = name;
@@ -46,8 +47,9 @@ public class User{
 
     @OneToMany
     @JoinTable(name = "user_puppy",
-            joinColumns =  @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "puppy_id", referencedColumnName = "id"))
+
     private Set<Puppy> puppies;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -64,31 +66,60 @@ public class User{
 
     public Set<Puppy> getPuppies(){ return this.puppies; }
 
-    public void setPuppies(Set<Puppy> puppies){this.puppies = puppies; }
+    public void setPuppies(Set<Puppy> puppies) {
+        this.puppies = puppies;
+    }
 
-    private static String hashPassword(String password) { return encoder.encode(password); }
+    private static String hashPassword(String password) {
+        return encoder.encode(password);
+    }
 
     public boolean isMatchingPassword(String password) {
         return encoder.matches(password, pwHash);
     }
 
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getEmail() { return email; }
+    public String getEmail() {
+        return email;
+    }
 
-    public void setEmail(String email) { this.email = email; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public int getAge() { return age; }
+    public int getAge() {
+        return age;
+    }
 
-    public void setAge(int age) { age = age; }
+    public void setAge(int age) {
+        age = age;
+    }
 
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-    public void addPuppy(Puppy pup) { this.puppies.add(pup); }
+    public void addPuppy(Puppy puppy) {
+        this.puppies.add(puppy);
+    }
+
+    public void removePuppy(Puppy puppy) {
+        this.puppies.remove(puppy);
+    }
 }
+

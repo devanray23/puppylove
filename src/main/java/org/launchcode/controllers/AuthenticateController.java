@@ -38,7 +38,7 @@ public class AuthenticateController extends AbstractController {
 
     //Processes Register Form and validates user input
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String proccessRegisterForm(@ModelAttribute @Valid RegisterForm registerForm, Errors errors, HttpServletRequest request, Model model) {
+    public String processRegisterForm(@ModelAttribute @Valid RegisterForm registerForm, Errors errors, HttpServletRequest request, Model model) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Register");

@@ -3,25 +3,16 @@
 <head th:replace="fragments :: head"></head>
 
 <body class="container">
-
 <h1 th:text="${title}" style="padding-top:100px">Default Title</h1>
-
 <div th:replace="fragments :: page-header"></div>
-
 <h2 th:text="${welcome}"></h2>
 
-<hr />
+<p th:unless="${puppies} and ${puppies.size()}">no puppies :(</p>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-4">
-            <img src="/image/user.png" class="profile-pic" >
-        </div>
-        <div class="col-md-8">
-
-        </div>
-    </div>
-</div>
+    <h1>Your puppies</h1>
+    <ul th:each="puppy : ${puppies}">
+        <li th:text="${puppy.name}"></li>
+    </ul>
 
 </body>
 </html>

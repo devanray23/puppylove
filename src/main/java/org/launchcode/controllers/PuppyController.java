@@ -1,20 +1,30 @@
 package org.launchcode.controllers;
 
-import org.launchcode.models.User;
 import org.launchcode.models.Puppy;
+import org.launchcode.models.User;
+import org.launchcode.models.data.PuppyDao;
+import org.launchcode.models.data.UserDao;
 import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
+import javax.validation.Valid;
+
+import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("puppy")
 public class PuppyController extends AbstractController {
 
     // Request path: /puppy
+    @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
     @RequestMapping(value = "")
     public String index(Model model, HttpServletRequest request) {
 
@@ -27,7 +37,6 @@ public class PuppyController extends AbstractController {
         return "puppy/index";
     }
 
-
     // Change Puppy Adding for specific user
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String displayAddPuppyForm(Model model, HttpServletRequest request) {
@@ -38,7 +47,6 @@ public class PuppyController extends AbstractController {
         model.addAttribute("users", userDao.findAll());
         return "puppy/add";
     }
-
 
     // Change Puppy Adding for specific user
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -52,6 +60,7 @@ public class PuppyController extends AbstractController {
             return "puppy/add";
         }
 
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
         User user = userDao.findOne(getUserIdFromSession(request));
         newPuppy.setUser(user);
         puppyDao.save(newPuppy);
@@ -71,34 +80,17 @@ public class PuppyController extends AbstractController {
 
     // Change Puppy removing for specific user
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemovePuppyForm(@RequestParam int[] puppyIds) {
+    public String processRemovePuppyForm(@RequestParam int[] puppyIds,
+                                         Model model, HttpServletRequest request) {
+
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
+        User user = userDao.findOne(getUserIdFromSession(request));
 
         for (int puppyId : puppyIds) {
+            user.removePuppy(puppyDao.findOne(puppyId));
             puppyDao.delete(puppyId);
         }
 
-        return "redirect:";
-    }
-
-    @RequestMapping(value = "edit/{puppyId}", method = RequestMethod.GET)
-    public String displayEditForm(Model model, @PathVariable int puppyId) {
-        model.addAttribute("puppy", puppyDao.findOne(puppyId));
-        puppyDao.delete(puppyId);
-        return "puppy/edit";
-    }
-
-    @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm (@ModelAttribute  @Valid Puppy tempPuppy,
-                                   Errors errors, Model model) {
-
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Edit Puppy");
-            model.addAttribute("puppy", tempPuppy);
-            puppyDao.delete(tempPuppy.getId());
-            return "puppy/edit";
-        }
-
-        puppyDao.save(tempPuppy);
         return "redirect:";
     }
 
