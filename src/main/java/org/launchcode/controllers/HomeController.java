@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -63,6 +64,17 @@ public class HomeController extends AbstractController {
         model.addAttribute("users", userDao.findByLocation(searchForm.getLocation()));
 
         return "home/search";
+    }
+
+    @RequestMapping(value="viewprofile/{id}", method = RequestMethod.GET)
+    public String displayViewProfile(Model model, @PathVariable int userID,
+                                     HttpServletRequest request){
+        model.addAttribute("user", userDao.findOne(userID));
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
+        model.addAttribute("puppies", userDao.findOne(userID).getPuppies());
+        model.addAttribute("profile", userDao.findOne(userID).getName() + "'s Profile");
+
+        return "home/viewprofile";
     }
 
     @RequestMapping("logout")
