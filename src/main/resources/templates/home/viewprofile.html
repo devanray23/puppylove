@@ -4,17 +4,24 @@
 <body class="container">
 <h1 th:text="${title}" style="padding-top:100px">Default Title</h1>
 
-<div th:replace="fragments :: page-header"></div>
+<h2 th:text="${profile}"></h2>
 
-<form method="post" style="max-width:600px;" action="/home/viewprofile">
+<hr />
 
-        <h1 th:text="*{user.name}"></h1>
-
-            <h3>Age</h3><p th:text="*{user.age}"></p>
-            <h3>Description</h3><p th:text="*{user.description}"></p>
-            <h3>Puppies</h3><p th:each="puppy : ${puppies}" th:text="${puppy.name}"></p>
-
-</form>
+<div class="row">
+    <div class="col-md-4">
+        <img src="image/user.png" class="profile-pic">
+    </div>
+    <div class="col-md-8">
+        <p th:unless="${puppies} and ${puppies.size()}">no puppies :(</p>
+        <table class="table">
+            <tr th:each="puppy : ${puppies}">
+                <td th:text="${puppy.name}"></td>
+                <td th:text="${puppy.ageYear}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
 
 </body>
 </html>

@@ -51,9 +51,19 @@ public class User {
 
     private Set<Puppy> puppies;
 
-    public Set<Puppy> getPuppies() {
-        return this.puppies;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_playdate",
+            joinColumns =  @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "playdate_id", referencedColumnName = "id"))
+    private Set<PlayDate> playDates;
+
+    public Set<PlayDate> getPlayDates(){ return playDates; }
+
+    public void setPlayDates(Set<PlayDate> playDates){
+        this.playDates = playDates;
     }
+
+    public Set<Puppy> getPuppies(){ return this.puppies; }
 
     public void setPuppies(Set<Puppy> puppies) {
         this.puppies = puppies;

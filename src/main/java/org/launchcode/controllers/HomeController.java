@@ -5,7 +5,11 @@ import org.launchcode.models.forms.EditForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.launchcode.models.forms.SearchForm;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -37,6 +41,47 @@ public class HomeController extends AbstractController {
     }
 
     // logout
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public String displaySearchPage(Model model, HttpServletRequest request){
+
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
+        model.addAttribute("title", "Search Users");
+        model.addAttribute("users", userDao.findAll());
+        model.addAttribute(new SearchForm());
+
+
+        return "home/search";
+    }
+
+    @RequestMapping(value = "search", method = RequestMethod.POST)
+    public String processSearchForm(@ModelAttribute @Valid SearchForm searchForm, Model model, Errors errors,
+                                    HttpServletRequest request){
+
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
+        model.addAttribute("title", "Search Users");
+        model.addAttribute(new SearchForm());
+
+        if(errors.hasErrors()){
+            model.addAttribute("users", userDao.findAll());
+            return "home/search";
+        }
+
+        model.addAttribute("users", userDao.findByLocation(searchForm.getLocation()));
+
+        return "home/search";
+    }
+
+    @RequestMapping(value="viewprofile/{id}", method = RequestMethod.GET)
+    public String displayViewProfile(Model model, @PathVariable int userID,
+                                     HttpServletRequest request){
+        model.addAttribute("user", userDao.findOne(userID));
+        model.addAttribute("sessionActive", isSessionActive(request.getSession()));
+        model.addAttribute("puppies", userDao.findOne(userID).getPuppies());
+        model.addAttribute("profile", userDao.findOne(userID).getName() + "'s Profile");
+
+        return "home/viewprofile";
+    }
+
     @RequestMapping("logout")
     public String logout(HttpServletRequest request){
 
