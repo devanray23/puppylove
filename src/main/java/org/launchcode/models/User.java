@@ -33,6 +33,10 @@ public class User {
     @Size(min = 0, max = 250)
     String description;
 
+    @NotNull
+    @Size(min = 0, max = 25)
+    String location;
+
     public User() {
     }
 
@@ -42,6 +46,7 @@ public class User {
         this.email = email;
         this.pwHash = hashPassword(password);
         this.description = "";
+        this.location = "";
     }
 
     @OneToMany
@@ -55,6 +60,7 @@ public class User {
     @JoinTable(name = "user_playdate",
             joinColumns =  @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "playdate_id", referencedColumnName = "id"))
+
     private Set<PlayDate> playDates;
 
     public Set<PlayDate> getPlayDates(){ return playDates; }
@@ -62,6 +68,10 @@ public class User {
     public void setPlayDates(Set<PlayDate> playDates){
         this.playDates = playDates;
     }
+
+    public String getLocation() { return location; }
+
+    public void setLocation(String location) { this.location = location; }
 
     public Set<Puppy> getPuppies(){ return this.puppies; }
 
