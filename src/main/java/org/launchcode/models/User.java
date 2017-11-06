@@ -27,7 +27,6 @@ public class User {
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @NotNull
-    @Size(min = 0)
     int age;
 
     @NotNull

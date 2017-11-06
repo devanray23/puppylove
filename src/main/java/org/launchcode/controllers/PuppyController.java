@@ -37,7 +37,7 @@ public class PuppyController extends AbstractController {
         return "puppy/index";
     }
 
-    // Change Puppy Adding for specific user
+    // Change Puppy: display adding a puppy form for specific user
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String displayAddPuppyForm(Model model, HttpServletRequest request) {
 
@@ -48,7 +48,7 @@ public class PuppyController extends AbstractController {
         return "puppy/add";
     }
 
-    // Change Puppy Adding for specific user
+    // Change Puppy: process adding a puppy for specific user
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddPuppyForm(@ModelAttribute @Valid Puppy newPuppy,
                                       Errors errors,
@@ -66,10 +66,11 @@ public class PuppyController extends AbstractController {
         puppyDao.save(newPuppy);
         user.addPuppy(newPuppy);
         userDao.save(user);
+
         return "puppy/view";
     }
 
-    // Change Puppy removing for specific user
+    // Change Puppy: display removal form
     @RequestMapping(value = "remove", method = RequestMethod.GET)
     public String displayRemovePuppyForm(Model model, HttpServletRequest request) {
         model.addAttribute("puppies", puppyDao.findAll());
@@ -78,7 +79,7 @@ public class PuppyController extends AbstractController {
         return "puppy/remove";
     }
 
-    // Change Puppy removing for specific user
+    // Change Puppy: process removal of a puppy for specific user
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemovePuppyForm(@RequestParam int[] puppyIds,
                                          Model model, HttpServletRequest request) {
@@ -94,6 +95,7 @@ public class PuppyController extends AbstractController {
         return "redirect:";
     }
 
+    // View a puppy's profile
     @RequestMapping(value = "view/{puppyId}", method = RequestMethod.GET)
     public String viewPuppy(Model model, @PathVariable int puppyId,
                             HttpServletRequest request) {
